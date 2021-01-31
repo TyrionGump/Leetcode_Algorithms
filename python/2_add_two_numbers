@@ -1,0 +1,42 @@
+# 思路: 本来个人是想着用递归一点一点往回返next的点, 结果没成功. 模版答案提供的思路是一路node.next下去创建计算sum的node.
+# 时间复杂度: O(n)
+# 所用时间 76 ms, 所用空间 14.3 MB
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        res_node = ListNode()
+        current_node = res_node
+        
+        cal_res = 0
+        this_add = 0
+        carry = 0
+        
+        while(l1 is not None or l2 is not None):
+            l1_val = 0
+            l2_val = 0
+            cal_res = 0
+            
+            if l1 is not None:
+                l1_val = l1.val
+            if l2 is not None:
+                l2_val = l2.val
+            
+            cal_res = l1_val + l2_val + carry
+            carry = cal_res // 10
+            this_add = cal_res % 10
+            current_node.next = ListNode(this_add)
+            current_node = current_node.next
+            
+            if l1 is not None:
+                l1 = l1.next
+            if l2 is not None:
+                l2 = l2.next
+        
+        if carry > 0:
+            current_node.next = ListNode(1)
+        
+        return res_node.next
